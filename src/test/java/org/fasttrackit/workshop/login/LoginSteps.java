@@ -68,13 +68,14 @@ clickbutton.click();
 
     @Then("^i expect invalid credential message$")
     public void i_expect_invalid_credential_message() throws Throwable{
-        WebElement error = driver.findElement(By.className("error-msg") );
-        assertThat(error.getText(), is ("Invalid user or password!"
-        ));
-        Utils.sleep(1000);
+        errorMessageShouldBePresent("Invalid user or password!");
+
     }
 
-
+    private void errorMessageShouldBePresent(String expectedMessage) {
+        WebElement error = driver.findElement(By.className("error-msg") );
+        assertThat(error.getText(), is(expectedMessage));
+    }
 
 
     @Given("^i open this url \"([^\"]*)\"$")
@@ -85,5 +86,25 @@ clickbutton.click();
     @Then("^i send (\\d+) into search field$")
     public void i_send_into_search_field(int arg1) throws Throwable {
         System.out.println("numarul este " + arg1);
+    }
+
+    @When("^i enter \"([^\"]*)\"/\"([^\"]*)\" credentials$")
+    public void i_enter_credentials(String emailValue, String passValue) throws Throwable {
+        WebElement email = driver.findElement(By.id("email"));
+        WebElement pass = driver.findElement(By.id("password"));
+        email.sendKeys(emailValue);
+        pass.sendKeys(passValue);
+    }
+
+    @Then("^i expect \"([^\"]*)\" message$")
+    public void i_expect_message(String errorMessage) {
+        errorMessageShouldBePresent(errorMessage);
+
+    }
+
+    @Given("^I successfully login$")
+    public void I_successfully_login() throws Throwable {
+        i_access_the_login_page();
+
     }
 }
