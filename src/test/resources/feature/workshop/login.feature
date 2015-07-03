@@ -1,10 +1,5 @@
 Feature: login
 
-  Scenario: Open any page
-    Given i open this url "http://google.com"
-    Then i send 10 into search field
-
-
   Scenario: Login successfullyuuuu
     Given i access the login page
     And i insert valid credential
