@@ -58,16 +58,20 @@ clickbutton.click();
         
     }
 
-    @And("^i insert invalid credential$")
-    public void i_insert_invalid_credential()  {
-        // Express the Regexp above with the code you wish you had
-        
+    @Given("^i insert invalid credential$")
+    public void i_insert_invalid_credential() throws Throwable {
+        WebElement email = driver.findElement(By.id("email"));
+        email.sendKeys("aaa@fast.com");
+        WebElement password = driver.findElement(By.id("password"));
+        password.sendKeys("eu.pass");
     }
 
     @Then("^i expect invalid credential message$")
-    public void i_expect_invalid_credential_message()  {
-        // Express the Regexp above with the code you wish you had
-        
+    public void i_expect_invalid_credential_message() throws Throwable{
+        WebElement error = driver.findElement(By.className("error-msg") );
+        assertThat(error.getText(), is ("Invalid user or password!"
+        ));
+        Utils.sleep(1000);
     }
 
 
